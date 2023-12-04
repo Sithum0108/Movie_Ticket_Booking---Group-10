@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <title>seatlayout</title>
@@ -227,7 +229,7 @@
       height: 50px; /* Set the desired height */
       padding: 15px;
       font-size: 15px;
-      background-color: rgb(162, 216, 162);
+      background-color: #4caf50;
       border: 2px solid green;
     }
 
@@ -282,19 +284,19 @@
 
 <body>
   <header>
-    <h1> <a class="navbar-brand" href="index.html"><img src="images/logo4.png"></a></h1>
+      <h1> <a class="navbar-brand" href="{% url 'MTB:home' %}"><img src="{% static 'images/logo4.png' %}"></a></h1>
   </header>
   <div class="center">
-    <div class="tickets">
-      <div class="ticket-selector">
-        <div class="head">
-        </div>
-        <div class="price-selector">
-          <label>Select a movie price:</label>
-          <select id="movie-price">
-            <option value="550" selected>Rupees 550/=</option>
-          </select>
-        </div>
+      <div class="tickets">
+          <div class="ticket-selector">
+              <div class="head">
+              </div>
+              <div class="price-selector">
+                  <label>Select a movie price:</label>
+                  <select id="movie-price">
+                      <option value="550" selected>Rupees 550/=</option>
+                  </select>
+              </div>
         <p>&nbsp;&nbsp;&nbsp;</p>
         <div class="seats">
           <div class="status">
@@ -319,13 +321,13 @@
           <span> <span class="count">0</span> Tickets </span>
           <div class="amount">0</div>
         </div>
-        <div class="send_bt">
-          <a href="contact.html">Proceed</a>
-        </div>
-        <p>&nbsp;&nbsp;&nbsp;</p>
-      </div>
+        <a href="{% url 'MTB:movies' %}">Back to Movies</a>
+        <!-- Proceed Button -->
+        
+        <button class="send_bt" onclick="proceedToContact()">Proceed</button>
     </div>
-  </div>
+</div>
+</div>
 
   <div id="booking-form"></div>
 
@@ -372,6 +374,12 @@
     });
 
     // Dynamic date generation
+    // Function to get day name
+    function getDayName(dayIndex) {
+      const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      return daysOfWeek[dayIndex];
+    }
+
     let dates = document.querySelector(".dates");
     for (let i = 0; i < 7; i++) {
       let currentDate = new Date();
@@ -385,11 +393,11 @@
         "beforeend",
         `<input type="radio" name="date" id="d${i + 1}" ${i === 0 ? "checked" : ""
         } /><label class="dates-item" for="d${i + 1}">
-        <div class="day">${dayName}</div>
-        <div class="date">${dateNumber}</div>
-      </label>`
-        );
-      }
+          <div class="day">${dayName}</div>
+          <div class="date">${dateNumber}</div>
+        </label>`
+      );
+    }
 
     // Dynamic time generation
     let timings = document.querySelector(".timings .dates:last-child");
@@ -427,12 +435,7 @@
       });
     });
 
-    // Function to get day name
-   function getDayName(dayIndex) {
-      const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      return daysOfWeek[dayIndex];
-    }
-    
+
     // Your existing JavaScript code
     document.getElementById("book-button").addEventListener("click", showBookingForm);
 
@@ -485,6 +488,12 @@
       // Redirect to contact.html when the button is clicked
       window.location.href = 'contact.html';
     });
+
+    // New function to navigate to the contact page
+    function proceedToContact() {
+            // Implement logic to navigate to the contact page
+            window.location.href = "{% url 'MTB:contact' %}";
+        }
   </script>
 </body>
 
