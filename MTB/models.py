@@ -5,7 +5,7 @@ class Movie(models.Model):
     description = models.TextField()
     release_date = models.DateField()
     duration = models.IntegerField()  # in minutes, you can adjust as needed
-    image = models.ImageField()  # assumes you have an 'images' folder in your media root
+    image = models.URLField(blank=True, null=True)  # allows blank values and accepts URLs
 
     def __str__(self):
         return self.title
