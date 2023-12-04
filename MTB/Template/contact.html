@@ -225,7 +225,7 @@
 
             const queryString = new URLSearchParams(data).toString();
 
-            fetch(`/layout/movies/seatlayout/contact/savedata?${queryString}`)
+            fetch(`/movies/seat-layout/contact/savedata?${queryString}`)
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -234,7 +234,7 @@
                 })
                 .then(data => {
                     alert(data.message);
-                    window.location.href = "/layout/movies";
+                    window.location.href = "";
                 })
 
                 .catch(error => {
