@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import HomeView, MovieListView, AboutView, ContactView, SeatLayoutView
+from .views import HomeView, MovieListView, AboutView, ContactView, SeatLayoutView, SaveContact
 
 app_name = 'MTB'
 
