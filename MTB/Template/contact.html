@@ -125,7 +125,6 @@
             padding: 20px;
             border: 1px solid #888;
             width: 80%;
-            text-align: center;
         }
 
         .close {
@@ -148,61 +147,6 @@
             font-family: 'Poppins', sans-serif;
             border-radius: 4px;
         }
-
-        /* Additional styles for the payment modal */
-        #payment-modal {
-            display: none;
-        }
-
-        #payment-modal .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            text-align: center;
-        }
-
-        #payment-modal h2 {
-            color: #333;
-        }
-
-        #payment-form label {
-            display: block;
-            margin: 10px 0;
-        }
-
-        #payment-form input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        #payment-form button {
-            background-color: #4caf50;
-            color: white;
-            padding: 10px 15px;
-            font-size: 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 150px;
-            text-align: center;
-        }
-
-        #payment-form button:hover {
-            background-color: #45a049;
-        }
-
-        /* Add PayPal-specific styling */
-        #paypal-fields {
-            display: none;
-        }
     </style>
 </head>
 
@@ -217,87 +161,88 @@
                 <div class="head">
                     <div class="title">Proceed to complete</div><br>
                 </div>
-                <div class="mail_section_1">
+                <div class="mail_section_1" id="add-card-data-fetch">
                     <div>
-                        <input type="text" class="mail_text" placeholder="Your Name" name="Your Name">
+                        <input type="text" class="mail_text" id="username" placeholder="Your Name" name="Your Name">
                     </div>
                     <div>
-                        <input type="text" class="mail_text" placeholder="Your Email" name="Your Email">
+                        <input type="text" class="mail_text" id="useremail" placeholder="Your Email" name="Your Email">
                     </div>
                     <div>
-                        <input type="text" class="mail_text" placeholder="Your Phone" name="Your Phone">
+                        <input type="text" class="mail_text" id="userphone" placeholder="Your Phone" name="Your Phone">
                     </div>
                     <!-- Payment Option -->
                     <div>
                         <label for="payment">Payment Method:</label>
                         <select id="payment" name="payment">
-                            <option value="add-card">Add Card</option>
-                            <option value="paypal">PayPal</option>
+                            <option value="Not Provided">Add Card</option>
+                            <option value="PayPal">PayPal</option>
+                            <option value="Mastercard">Mastercard</option>
+                            <option value="Visa">Visa</option>
                             <!-- Add more options if needed -->
                         </select>
                     </div>
-                    <!-- Payment Button -->
-                    <div class="send_bt" id="open-payment-modal">
-                        <a href="#">ADD CARD DETAILS</a>
+                    <div>
+                        <input type="text" class="mail_text" id="usercardnumber" placeholder="Your Card Number"
+                            name="Your Card Number">
                     </div>
+                    <div>
+                        <input type="text" class="mail_text" id="usercardexpirydate" placeholder="Your Card Expiry Date"
+                            name="Your Card Expiry Date">
+                    </div>
+                    <div>
+                        <input type="text" class="mail_text" id="usercardcvv" placeholder="Your Card CVV"
+                            name="Your Card CVV">
+                    </div>
+                    <!-- Payment Button -->
+                    <button class="send_bt" id="open-payment-modal">
+                        <a>MAKE PAYMENT</a>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Payment Modal -->
-    <div id="payment-modal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closePaymentModal()">&times;</span>
-            <h2>Payment Details</h2>
-            <form id="payment-form">
-                <!-- Add Card Fields -->
-                <div id="add-card-fields">
-                    <label for="card-number">Card Number:</label>
-                    <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required> <p>
-
-                    <label for="expiry-date">Expiry Date:</label>&nbsp;&nbsp;&nbsp;
-                    <input type="text" id="expiry-date" placeholder="MM/YYYY" required> <p>
-
-                    <label for="cvv">CVV:</label>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="text" id="cvv" placeholder="123" required>
-                </div>
-
-                <!-- PayPal Fields -->
-                <div id="paypal-fields">
-                    <!-- Add PayPal-specific fields if needed -->
-                </div>
-
-                <!-- Updated Submit Payment Button -->
-                <button class="send_bt" onclick="submitPayment()">SUBMIT PAYMENT</button>
-            </form>
-        </div>
-    </div>
-
+    
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Add event listener to open payment modal
-            document.getElementById("open-payment-modal").addEventListener("click", openPaymentModal);
-        });
+        document.getElementById("open-payment-modal").addEventListener("click", function () {
+            var customerName = document.getElementById("username").value;
+            var customerEmail = document.getElementById("useremail").value;
+            var customerPhone = document.getElementById("userphone").value;
+            var customerPayment = document.getElementById("payment").value;
+            var customerCardNumber = document.getElementById("usercardnumber").value;
+            var customerCardExpiryDate = document.getElementById("usercardexpirydate").value;
+            //var customerCardCvv = document.getElementById("usercardcvv").value;
 
-        // Function to open payment modal
-        function openPaymentModal() {
-            document.getElementById("payment-modal").style.display = "block";
-        }
+             var data = {
+                name: customerName,
+                email: customerEmail,
+                phone: customerPhone,
+                payment: customerPayment,
+                cardnumber: customerCardNumber,
+                cardexpirydate: customerCardExpiryDate,
+                //cardcvv: customerCardCvv
+            };
 
-        // Function to close payment modal
-        function closePaymentModal() {
-            document.getElementById("payment-modal").style.display = "none";
-        }
+            const queryString = new URLSearchParams(data).toString();
 
-        // Updated submitPayment function
-        function submitPayment() {
-            // Implement logic for submitting payment and showing the success message
-            alert("Your transaction is successfully completed!");
-            // You can add more logic here, such as submitting the form data to the server
-            // or redirecting the user to a confirmation page.
-        }
+            fetch(`/movies/seat-layout/contact/savedata?${queryString}`)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Network response was not ok.');
+                })
+                .then(data => {
+                    alert(data.message);
+                    window.location.href = "";
+                })
+
+                .catch(error => {
+                    console.error('Error while saving date:', error);
+                    alert('There was an error. Please try again.');
+                })
+        })
+        
     </script>
 </body>
 

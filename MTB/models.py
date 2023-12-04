@@ -9,3 +9,11 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.title
+
+class ContactInfo(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.IntegerField(max_length=10)
+    payment = models.CharField(max_length=100)
+    cardnumber = models.IntegerField(max_length=16, default=None)
+    cardexpirydate = models.CharField(max_length=7, default=datetime.now().strftime('%m/%Y'))
