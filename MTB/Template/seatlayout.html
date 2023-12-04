@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>seatlayout</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: darkgray;
+    }
+
+    header {
+      background-color: #f2f2f2;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 90vh;
+    }
+
+    .tickets {
+      width: 550px;
+      height: fit-content;
+      border: 0.4mm solid rgba(0, 0, 0, 0.08);
+      border-radius: 3mm;
+      box-sizing: border-box;
+      padding: 10px;
+      font-family: 'Poppins', sans-serif;
+      max-height: 96vh;
+      overflow: auto;
+      background: white;
+      box-shadow: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    .ticket-selector {
+      background: rgb(243, 243, 243);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: column;
+      box-sizing: border-box;
+      padding: 20px;
+    }
+
+    .head {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .seats {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      min-height: 150px;
+      position: relative;
+    }
+
+    .status {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+
+    .seats::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, 0);
+      width: 220px;
+      height: 7px;
+      background: rgb(141, 198, 255);
+      border-radius: 0 0 3mm 3mm;
+      border-top: 0.3mm solid rgb(180, 180, 180);
+    }
+
+    .item {
+      font-size: 12px;
+      position: relative;
+    }
+
+    .item::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -12px;
+      transform: translate(0, -50%);
+      width: 10px;
+      height: 10px;
+      background: rgb(255, 255, 255);
+      outline: 0.2mm solid rgb(120, 120, 120);
+      border-radius: 0.3mm;
+    }
+
+    .item:nth-child(2)::before {
+      background: rgb(180, 180, 180);
+      outline: none;
+    }
+
+    .item:nth-child(3)::before {
+      background: rgb(28, 185, 120);
+      outline: none;
+    }
+
+    .all-seats {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      grid-gap: 15px;
+      margin: 60px 0;
+      margin-top: 20px;
+      position: relative;
+    }
+
+    .seat {
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 0.5mm;
+      outline: 0.3mm solid rgb(180, 180, 180);
+      cursor: pointer;
+    }
+
+    .all-seats input:checked + label {
+      background: rgb(28, 185, 120);
+      outline: none;
+    }
+
+    .seat.booked {
+      background: rgb(180, 180, 180);
+      outline: none;
+      pointer-events: none;
+    }
+
+    .seat.selected {
+      background: rgb(28, 185, 120); /* Use the same green color */
+      outline: none;
+    }
+
+    input {
+      display: none;
+    }
+
+    .timings {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .dates {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    .dates-item {
+      width: 50px;
+      height: 40px;
+      background: rgb(233, 233, 233);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 10px 0;
+      border-radius: 2mm;
+      cursor: pointer;
+    }
+
+    .day {
+      font-size: 12px;
+    }
+
+    .time-slot {
+      width: 70px;
+      height: 40px;
+      background: rgb(233, 233, 233);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 10px 0;
+      border-radius: 2mm;
+      cursor: pointer;
+    }
+
+    .selected-date,
+    .selected-time {
+      background: rgb(28, 185, 120); /* Use the same green color */
+      color: white;
+    }
+
+    .ticket-selector button {
+      width: 150px; /* Set the desired width */
+      height: 50px; /* Set the desired height */
+      padding: 15px;
+      font-size: 15px;
+      background-color: rgb(162, 216, 162);
+      border: 2px solid green;
+    }
+
+    .price-selector {
+      margin-top: 20px;
+    }
+
+    select {
+      padding: 8px;
+      font-size: 14px;
+    }
+
+    .total {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .total span {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .total span span {
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .send_bt {
+      background-color: #4caf50;
+      color: white;
+      padding: 10px 15px;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 150px;
+      text-align: center;
+      margin: 10px auto;
+    }
+
+    .send_bt a {
+      text-decoration: none;
+      color: white;
+    }
+
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1> <a class="navbar-brand" href="index.html"><img src="images/logo4.png"></a></h1>
+  </header>
+  <div class="center">
+    <div class="tickets">
+      <div class="ticket-selector">
+        <div class="head">
+        </div>
+        <div class="price-selector">
+          <label>Select a movie price:</label>
+          <select id="movie-price">
+            <option value="550" selected>Rupees 550/=</option>
+          </select>
+        </div>
+        <p>&nbsp;&nbsp;&nbsp;</p>
+        <div class="seats">
+          <div class="status">
+            <div class="item">Available</div>
+            <div class="item">Booked</div>
+            <div class="item">Selected</div>
+          </div>
+          <div class="all-seats">
+            <!-- Dynamically generated seats -->
+          </div>
+        </div>
+        <div class="timings">
+          <div class="dates">
+            <!-- Dynamically generated dates -->
+          </div>
+          <div class="dates">
+            <!-- Dynamically generated time slots -->
+          </div>
+        </div>
+
+        <div class="total">
+          <span> <span class="count">0</span> Tickets </span>
+          <div class="amount">0</div>
+        </div>
+        <div class="send_bt">
+          <a href="contact.html">Proceed</a>
+        </div>
+        <p>&nbsp;&nbsp;&nbsp;</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="booking-form"></div>
+
+  <script>
+    // Dynamic seat generation
+    let seats = document.querySelector(".all-seats");
+    for (var i = 0; i < 59; i++) {
+      let randint = Math.floor(Math.random() * 2);
+      let booked = randint === 1 ? "booked" : "";
+      seats.insertAdjacentHTML(
+        "beforeend",
+        '<input type="checkbox" name="tickets" id="s' +
+        (i + 2) +
+        '" /><label for="s' +
+        (i + 2) +
+        '" class="seat ' +
+        booked +
+        '"></label>'
+      );
+    }
+
+    // Event listener for seat selection
+    let tickets = seats.querySelectorAll("input");
+    tickets.forEach((ticket) => {
+      ticket.addEventListener("change", () => {
+        let amount = document.querySelector(".amount");
+        let count = document.querySelector(".count");
+        let price = document.querySelector("#movie-price").value;
+        amount = Number(amount.innerHTML);
+        count = Number(count.innerHTML);
+
+        if (ticket.checked && !ticket.classList.contains("booked")) {
+          count += 1;
+          amount += Number(price);
+          ticket.classList.add("selected");
+        } else {
+          count -= 1;
+          amount -= Number(price);
+          ticket.classList.remove("selected");
+        }
+        document.querySelector(".amount").innerHTML = amount;
+        document.querySelector(".count").innerHTML = count;
+      });
+    });
+
+    // Dynamic date generation
+    let dates = document.querySelector(".dates");
+    for (let i = 1; i <= 7; i++) {
+      dates.insertAdjacentHTML(
+        "beforeend",
+        `<input type="radio" name="date" id="d${i}" ${
+          i === 1 ? "checked" : ""
+        } /><label class="dates-item" for="d${i}">
+            <div class="day">${getDayName(i)}</div>
+            <div class="date">${i}</div>
+          </label>`
+      );
+    }
+
+    // Dynamic time generation
+    let timings = document.querySelector(".timings .dates:last-child");
+    const timeSlots = ['10:00 AM', '12:15 PM', '06:30 PM', '09:00 PM'];
+    timeSlots.forEach((time, index) => {
+      timings.insertAdjacentHTML(
+        'beforeend',
+        `<input type="radio" name="time" id="t${index}" ${
+          index === 0 ? "checked" : ""
+        } /><label class="time-slot" for="t${index}">
+            <div>${time}</div>
+        </label>`
+      );
+    });
+
+    // Event listener for date selection
+    let dateInputs = dates.querySelectorAll("input");
+    dateInputs.forEach((dateInput) => {
+      dateInput.addEventListener("change", () => {
+        dateInputs.forEach((input) => {
+          input.nextElementSibling.classList.remove("selected-date");
+        });
+        dateInput.nextElementSibling.classList.add("selected-date");
+      });
+    });
+
+    // Event listener for time selection
+    let timeInputs = timings.querySelectorAll("input");
+    timeInputs.forEach((timeInput) => {
+      timeInput.addEventListener("change", () => {
+        timeInputs.forEach((input) => {
+          input.nextElementSibling.classList.remove("selected-time");
+        });
+        timeInput.nextElementSibling.classList.add("selected-time");
+      });
+    });
+
+    // Function to get day name
+    function getDayName(dayNumber) {
+      const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      return days[dayNumber - 1];
+    }
+
+    // Your existing JavaScript code
+    document.getElementById("book-button").addEventListener("click", showBookingForm);
+
+    function showBookingForm() {
+      const bookingFormDiv = document.getElementById("booking-form");
+
+      if (bookingFormDiv) {
+        const formHtml = `
+        <form id="user-info-form">
+          <label for="name">Name:</label>
+          <input type="text" id="name" required>
+
+          <label for="email">Email:</label>
+          <input type="email" id="email" required>
+
+          <label for="phone">Phone:</label>
+          <input type="tel" id="phone" required>
+
+          <button type="button" onclick="submitBooking()">Submit</button>
+        </form>
+      `;
+
+        bookingFormDiv.innerHTML = formHtml;
+      } else {
+        console.error("Error: Element with ID 'booking-form' not found.");
+      }
+    }
+
+    function submitBooking() {
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
+
+      // You can perform further actions with the collected information
+      // For      // You can perform further actions with the collected information
+      // For now, let's log the information to the console
+      console.log("Name:", name);
+      console.log("Email:", email);
+      console.log("Phone:", phone);
+      // Optionally, you can clear the form and hide it after submission
+      document.getElementById("user-info-form").reset();
+      document.getElementById("booking-form").innerHTML = "";
+    }
+
+    // Get the button element
+    var bookButton = document.getElementById('book-button');
+
+    // Add a click event listener to the button
+    bookButton.addEventListener('click', function () {
+      // Redirect to contact.html when the button is clicked
+      window.location.href = 'contact.html';
+    });
+  </script>
+</body>
+
+</html>
