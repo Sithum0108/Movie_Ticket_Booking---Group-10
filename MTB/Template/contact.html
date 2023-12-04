@@ -1,7 +1,9 @@
+{% load static %}
 
- <!DOCTYPE html>
- 
+<!DOCTYPE html>
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,145 +16,199 @@
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet"
     />
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        background-color: darkgray;
-    }
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: darkgray;
+        }
 
-    header {
-        background-color: #f2f2f2;
-        color: white;
-        padding: 15px;
-        text-align: center;
-        margin-bottom: 5px;
-    }
+        header {
+            background-color: #f2f2f2;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 5px;
+        }
 
-    header h1 {
-        margin: 0;
-        padding: 0;
-    }
+        header h1 {
+            margin: 0;
+            padding: 0;
+        }
 
-    .center {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 90vh;
-    }
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+        }
 
-    .tickets {
-        width: 70%;
-        height: fit-content;
-        border: 0.4mm solid rgba(0, 0, 0, 0.08);
-        border-radius: 3mm;
-        box-sizing: border-box;
-        padding: 20px;
-        font-family: 'Poppins', sans-serif;
-        max-height: 100vh;
-        overflow: auto;
-        background: white;
-        box-shadow: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);
-    }
+        .tickets {
+            width: 70%;
+            height: fit-content;
+            border: 0.4mm solid rgba(0, 0, 0, 0.08);
+            border-radius: 3mm;
+            box-sizing: border-box;
+            padding: 20px;
+            font-family: 'Poppins', sans-serif;
+            max-height: 100vh;
+            overflow: auto;
+            background: white;
+            box-shadow: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
 
-    .title {
-        font-weight: bold;
-    }
+        .title {
+            font-weight: bold;
+        }
 
-    label {
-        font-size: 18px; /* Adjust the font size as needed */
-    }
+        label {
+            font-size: 18px; /* Adjust the font size as needed */
+        }
 
-    .mail_text,
-    #payment,
-    #card-fields input {
-        width: calc(100% - 22px);
-        padding: 10px;
-        margin-bottom: 10px;
-        box-sizing: border-box;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 16px;
-        font-family: 'Poppins', sans-serif;
-    }
+        .mail_text,
+        #payment,
+        #card-fields input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+        }
 
-    /* Increase the width of the payment selector box */
-    #payment {
-        width: calc(100% - 22px);
-    }
+        /* Increase the width of the payment selector box */
+        #payment {
+            width: calc(100% - 22px);
+        }
 
-    /* Increase the width of the Add Card selector box */
-    #payment option[value="add-card"] {
-        width: calc(100% - 22px);
-    }
+        /* Increase the width of the Add Card selector box */
+        #payment option[value="add-card"] {
+            width: calc(100% - 22px);
+        }
 
-    .send_bt {
-        background-color: #4caf50;
-        color: white;
-        padding: 10px 15px;
-        font-size: 16px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        width: 150px;
-        text-align: center;
-        margin: 10px auto;
-    }
+        .send_bt {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 150px;
+            text-align: center;
+            margin: 10px auto;
+        }
 
-    .send_bt a {
-        text-decoration: none;
-        color: white;
-    }
+        .send_bt a {
+            text-decoration: none;
+            color: white;
+        }
 
-    /* Payment Modal Styles */
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-    }
+        /* Payment Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
 
-    .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-    }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            text-align: center;
+        }
 
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
 
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
 
-    /* Adjust the font size for placeholders */
-    ::placeholder {
-        font-size: 16px;
-        font-family: 'Poppins', sans-serif;
+        /* Adjust the font size for placeholders */
+        ::placeholder {
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            border-radius: 4px;
+        }
 
-        border-radius: 4px;
-    }
+        /* Additional styles for the payment modal */
+        #payment-modal {
+            display: none;
+        }
 
+        #payment-modal .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            text-align: center;
+        }
 
-</style>
+        #payment-modal h2 {
+            color: #333;
+        }
+
+        #payment-form label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        #payment-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #payment-form button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 150px;
+            text-align: center;
+        }
+
+        #payment-form button:hover {
+            background-color: #45a049;
+        }
+
+        /* Add PayPal-specific styling */
+        #paypal-fields {
+            display: none;
+        }
+    </style>
 </head>
+
 <body>
     <header>
-        <h1><a class="navbar-brand" href="index.html"><img src="images/logo4.png"></a></h1>
+        <h1><a class="navbar-brand" href="{% url 'MTB:home' %}"><img src="{% static 'images/logo4.png' %}"></a></h1>
     </header>
 
     <div class="center">
@@ -182,7 +238,7 @@
                     </div>
                     <!-- Payment Button -->
                     <div class="send_bt" id="open-payment-modal">
-                        <a href="#">ADD CARD</a>
+                        <a href="#">ADD CARD DETAILS</a>
                     </div>
                 </div>
             </div>
@@ -192,7 +248,7 @@
     <!-- Payment Modal -->
     <div id="payment-modal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <span class="close" onclick="closePaymentModal()">&times;</span>
             <h2>Payment Details</h2>
             <form id="payment-form">
                 <!-- Add Card Fields -->
@@ -209,65 +265,40 @@
                 </div>
 
                 <!-- PayPal Fields -->
-                <div id="paypal-fields" style="display: none;">
+                <div id="paypal-fields">
                     <!-- Add PayPal-specific fields if needed -->
                 </div>
 
-                <button type="button" id="submit-payment" class="send_bt">
-                    <a href="#">SUBMIT PAYMENT</a>
-                </button>
+                <!-- Updated Submit Payment Button -->
+                <button class="send_bt" onclick="submitPayment()">SUBMIT PAYMENT</button>
             </form>
         </div>
     </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var modal = document.getElementById("payment-modal");
-        var openBtn = document.getElementById("open-payment-modal");
-        var closeBtn = document.getElementsByClassName("close")[0];
-
-        openBtn.onclick = function () {
-            modal.style.display = "block";
-        };
-
-        closeBtn.onclick = function () {
-            modal.style.display = "none";
-        };
-
-        window.onclick = function (event) {
-            if (event.target === modal) {
-                modal.style.display = "none";
-            }
-        };
-
-        document.getElementById("submit-payment").addEventListener("click", function () {
-            var selectedPaymentMethod = document.getElementById("payment").value;
-
-            if (selectedPaymentMethod === "add-card") {
-                var cardNumber = document.getElementById("card-number").value;
-                var expiryDate = document.getElementById("expiry-date").value;
-                var cvv = document.getElementById("cvv").value;
-
-                alert("Add Card payment submitted!");
-            } else if (selectedPaymentMethod === "paypal") {
-                alert("PayPal payment submitted!");
-            }
-
-            modal.style.display = "none";
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Add event listener to open payment modal
+            document.getElementById("open-payment-modal").addEventListener("click", openPaymentModal);
         });
 
-        document.getElementById("payment").addEventListener("change", function () {
-            var selectedPaymentMethod = document.getElementById("payment").value;
+        // Function to open payment modal
+        function openPaymentModal() {
+            document.getElementById("payment-modal").style.display = "block";
+        }
 
-            if (selectedPaymentMethod === "add-card") {
-                document.getElementById("add-card-fields").style.display = "block";
-                document.getElementById("paypal-fields").style.display = "none";
-            } else if (selectedPaymentMethod === "paypal") {
-                document.getElementById("add-card-fields").style.display = "none";
-                document.getElementById("paypal-fields").style.display = "block";
-            }
-        });
-    });
-</script>
+        // Function to close payment modal
+        function closePaymentModal() {
+            document.getElementById("payment-modal").style.display = "none";
+        }
+
+        // Updated submitPayment function
+        function submitPayment() {
+            // Implement logic for submitting payment and showing the success message
+            alert("Your transaction is successfully completed!");
+            // You can add more logic here, such as submitting the form data to the server
+            // or redirecting the user to a confirmation page.
+        }
+    </script>
 </body>
+
 </html>
