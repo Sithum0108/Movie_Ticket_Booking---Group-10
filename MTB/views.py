@@ -2,8 +2,8 @@
 
 from django.shortcuts import render, get_object_or_404
 from django.views import View
-from django.http import HttpResponse
-from .models import Movie  # Import your Movie model
+from django.http import HttpResponse, JsonResponse
+from .models import Movie, ContactInfo  
 
 class HomeView(View):
     def get(self, request):
@@ -25,3 +25,25 @@ class ContactView(View):
 class SeatLayoutView(View):
     def get(self, request):
         return render(request, 'seatlayout.html')
+
+def save_to_database(request):
+    if request.method == 'GET':
+        #data = request.GET.get('')   
+
+        customer_name = request.GET.get('name')
+        customer_email = request.GET.get('email')
+        customer_phone = request.GET.get('phone')
+        customer_payment = request.GET.get('payment')
+        customer_card_number = request.GET.get('cardnumber')
+        customer_card_expiry_date = request.GET.get('cardexpirydate')
+        #customer_card_cvv = request.GET.get('cardcvv')
+
+        ContactInfo_instance = ContactInfo(name=customer_name, email=customer_email, phone=customer_phone, payment=customer_payment, 
+                                           cardnumber=customer_card_number, cardexpirydate=customer_card_expiry_date,
+        )
+        ContactInfo_instance.save()
+
+        return JsonResponse({'message': 'Contact Information Added successfully'})  
+    else:
+        return JsonResponse({'error': 'Invalid request method'})    
+    
