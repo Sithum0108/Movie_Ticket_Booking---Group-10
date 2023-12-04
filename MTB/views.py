@@ -11,7 +11,8 @@ class HomeView(View):
 
 class MovieListView(View):
     def get(self, request):
-        return render(request, 'movie.html')
+        movies = Movie.objects.all()
+        return render(request, 'movie.html', {'movies': movies})
 
 class AboutView(View):
     def get(self, request):
