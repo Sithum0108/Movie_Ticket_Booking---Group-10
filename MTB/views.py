@@ -43,7 +43,7 @@ def save_to_database(request):
         )
         ContactInfo_instance.save()
 
-        return JsonResponse({'message': 'Contact Information Added successfully'})  
+        return JsonResponse({'message': 'Your seats are SUCCESSFULLY RESERVED'})  
     else:
         return JsonResponse({'error': 'Invalid request method'})    
     
