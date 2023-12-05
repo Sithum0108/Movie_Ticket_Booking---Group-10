@@ -234,7 +234,7 @@
                 })
                 .then(data => {
                     alert(data.message);
-                    window.location.href = "";
+                    window.location.href = "{% url 'MTB:home' %}";
                 })
 
                 .catch(error => {
