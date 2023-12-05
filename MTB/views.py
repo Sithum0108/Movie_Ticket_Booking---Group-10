@@ -45,5 +45,22 @@ def save_to_database(request):
 
         return JsonResponse({'message': 'Your seats are SUCCESSFULLY RESERVED'})  
     else:
-        return JsonResponse({'error': 'Invalid request method'})    
+        return JsonResponse({'error': 'Invalid request method'})   
+
+
+
+def save_about_data(request):
+    if request.method == 'GET': 
+
+        commentor_name = request.GET.get('commentname')
+        commentor_messege = request.GET.get('commentmessage')
+        
+        Feedback_instance = Feedback(name=commentor_name, comment=commentor_messege,
+        )
+        Feedback_instance.save()
+
+        return JsonResponse({'message': 'Contact Information Added successfully'})  
+    else:
+        return JsonResponse({'error': 'Invalid request method'})   
+
     
