@@ -123,11 +123,11 @@ At our movie hall, your comfort, cleanliness, and overall satisfaction are our p
                <div class="row">
                   <div class="col-md-12">
                      <div class="mail_section_1">
-                        <input type="text" class="mail_text" placeholder="Your Name" name="Your Name">
+                        <input type="text" class="mail_text" id="commentname" placeholder="Your Name" name="Your Name">
                         <input type="text" class="mail_text" placeholder="Your Email" name="Your Email">
                         <input type="text" class="mail_text" placeholder="Your Phone" name="Your Phone">
                         <textarea class="massage-bt" placeholder="Massage" rows="5" id="comment" name="Massage"></textarea>
-                        <div class="send_bt"><a href="{% url 'MTB:contact' %}">SEND</a></div>
+                        <button class="send_bt" id="commentbtn"><a>SEND</a></button>
                      </div>
                   </div>
                   <div class="map_main">
@@ -207,6 +207,38 @@ At our movie hall, your comfort, cleanliness, and overall satisfaction are our p
       <!-- sidebar -->
       <script src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
       <script src="{% static 'js/custom.js' %}"></script>
+
+                  
+      <script>
+         document.getElementById("commentbtn").addEventListener("click", function () {
+            var commentorName = document.getElementById("commentname").value;
+            var commentorMessage = document.getElementById("comment").value;
+
+            var data = {
+               commentname: commentorName,
+               commentmessage: commentorMessage,
+
+            };
+
+            const queryString = new URLSearchParams(data).toString();
+
+            fetch(`/about/savedata?${queryString}`)
+               .then(response => {
+                  if (response.ok) {
+                     return response.json();
+                  }
+                  throw new Error('Network response was not ok.');
+               })
+               .then(data => {
+                  window.location.href = "{% url 'MTB:home' %}";
+               })
+               .catch(error => {
+                  console.error('Error while saving date:', error);
+                  alert('There was an error. Please try again.');
+               })
+         })
+      </script>
+            
 
    </body>
 </html>
