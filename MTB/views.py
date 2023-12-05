@@ -3,7 +3,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.http import HttpResponse, JsonResponse
-from .models import Movie, ContactInfo  
+from .models import Movie, ContactInfo, Feedback 
 
 class HomeView(View):
     def get(self, request):
