@@ -1,5 +1,5 @@
 from django.db import models
-from django.db import datetime
+from datetime import datetime
 
 class Movie(models.Model):
     title = models.CharField(max_length=255)
