@@ -18,3 +18,19 @@ class ContactInfo(models.Model):
     payment = models.CharField(max_length=100)
     cardnumber = models.IntegerField(max_length=16, default=None)
     cardexpirydate = models.CharField(max_length=7, default=datetime.now().strftime('%m/%Y'))
+
+class UpcomingMovie(models.Model):
+    title = models.CharField(max_length=255)
+    image_url = models.URLField()
+    link = models.URLField()
+    release_date = models.DateField()
+
+    def __str__(self):
+        return self.title
+
+class Feedback(models.Model):
+    name = models.CharField(max_length=255)
+    message = models.TextField()
+
+    def __str__(self):
+        return self.name
