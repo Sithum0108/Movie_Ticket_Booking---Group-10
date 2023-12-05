@@ -9,7 +9,7 @@ urlpatterns = [
     path('about/', AboutView.as_view(), name='about'),
     path('contact/', ContactView.as_view(), name='contact'),
     path('movies/seat-layout/', SeatLayoutView.as_view(), name='seat_layout'),
-    path('movies/seat-layout/contact/savedata/', views.save_to_database)
-    path('about/savedata', views.save_about_data)
+    path('movies/seat-layout/contact/savedata/', save_to_database)
+    path('about/savedata', save_about_data)
 ]
 
